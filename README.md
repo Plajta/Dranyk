@@ -10,6 +10,9 @@ Projekt vytvářený na Movement hackathonu v Plzni v TechToweru. Software a des
 
 ## Data
 
+- Poloha ulic z RUIAN: [odkaz](https://opendata.plzen.eu/public/opendata/detail/10)
+- Plochy budov: [odkaz](https://opendata.plzen.eu/public/opendata/detail/85)
+
 - Heatmap obyvatel
 - Objekty v mapách [řeky, tratě, silnice???]
 - Body nemocnic
@@ -17,3 +20,5 @@ Projekt vytvářený na Movement hackathonu v Plzni v TechToweru. Software a des
 
 ## TODO
 
+- Hustota obyv - Honza
+- Řekyyy
