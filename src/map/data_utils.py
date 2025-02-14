@@ -40,18 +40,39 @@ class GeoJSONwriter:
     def add_polygon(self, np_array):
         polygon = {
             "type": "Feature",
-            "id": 1,
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [[]]
             },
             "properties": {}
         }
-
         for point in np_array:
             polygon["geometry"]["coordinates"][0].append(point.tolist())
-
         self.data["features"].append(polygon)
+
+    def add_multipoint(self, np_array):
+        multipoint = {
+            "type": "Feature",
+            "geometry": {
+                "type": "MultiPoint",
+                "coordinates": []
+            },
+            "properties": {}
+        }
+        for point in np_array:
+            multipoint["geometry"]["coordinates"].append(point.tolist())
+        self.data["features"].append(multipoint)
+
+    def add_point(self, np_coords):
+        point = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": np_coords.tolist()
+            },
+            "properties": {}
+        }
+        self.data["features"].append(point)
 
     def write_data(self):
         with open(self.out_file, 'w') as outfile:

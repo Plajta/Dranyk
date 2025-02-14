@@ -16,4 +16,4 @@ if __name__ == "__main__":
 
     data = gjson_reader.read_data()
 
-    process_rails(data["WGS_koleje"]["features"], gjson_writer)
+    process_rails(data["WGS_koleje2"]["features"], gjson_writer)

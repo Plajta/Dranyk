@@ -9,3 +9,4 @@ dependencies:
     - geojson
     - shapely
     - scipy
+    - fastapi
