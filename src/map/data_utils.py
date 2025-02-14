@@ -2,6 +2,7 @@ import geojson
 import os
 from shapely.geometry import mapping
 
+
 class GeoJSONreader:
     def __init__(self, data_path):
         self.data_path = data_path

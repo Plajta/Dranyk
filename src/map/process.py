@@ -1,4 +1,3 @@
-from shapely import convex_hull
 from shapely.geometry import Point, LineString
 
 from sklearn.cluster import DBSCAN
@@ -7,7 +6,18 @@ from scipy.spatial import Delaunay
 import numpy as np
 import networkx as nx
 
-def process_rails(rail_features, gjson_writer,esp=0.0031):
+#                    Railway station        # Industry near railway station
+EXCLUSION_REGIONS = ["32003010002264835", "32003010002268968", "32003010002268277"
+                     # Another railway station # Industrial complex
+                     "32003010002270746", "32003010002281137",
+                     # Last industry
+                     "32003010002140177", "32003010002140804"]
+
+
+def process_rails(rail_features,
+                  building_features,
+                  gjson_writer,
+                  esp=0.00031):
     multipoint_coords = []
     for feature in rail_features:
         coords = feature["geometry"]["coordinates"]
@@ -42,11 +52,10 @@ def process_rails(rail_features, gjson_writer,esp=0.0031):
         gjson_writer.add_linestring(line)
     gjson_writer.write_data()
 
-def extract_coordinates_as_lines(data):
 
-    
+def extract_coordinates_as_lines(data):
     line_strings = []
-    
+
     for feature in data.get("features", []):
         geom = feature.get("geometry", {})
         if geom.get("type") == "Polygon":
@@ -56,5 +65,5 @@ def extract_coordinates_as_lines(data):
             for polygon in geom.get("coordinates", []):
                 for ring in polygon:
                     line_strings.append({"type": "LineString", "coordinates": ring})
-    
+
     return {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": ls} for ls in line_strings]}
