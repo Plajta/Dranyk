@@ -4,10 +4,9 @@ import os
 
 
 class GeoJSONreader:
-    def __init__(self, data_path,weight):
+    def __init__(self, data_path):
         self.data_path = data_path
         self.data = {}
-        self.weight = weight
 
     def __read_geojson__(self, path):
         with open(path, 'r') as file:
