@@ -1,2 +1,6 @@
+# data files
 /data/*
 !/data/.gitkeep
+
+#generated folders
+/src/map/__pycache__/*
