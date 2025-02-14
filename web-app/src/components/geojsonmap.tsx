@@ -1,30 +1,33 @@
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+"use client";
+
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 type MapProps = {
   position: [number, number];
   zoom: number;
+  geojsondata: any;
 };
 
-export default function GeoJsonMap({ position, zoom }: MapProps) {
+export default function GeoJsonMap(props: MapProps) {
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("@/components/map"), {
+        loading: () => <p>A map is loading</p>,
+        ssr: false,
+      }),
+    [],
+  );
+  const position: [number, number] = [51.505, -0.09];
+  const zoom = 13;
+
   return (
-    <MapContainer
-      center={position}
-      zoom={zoom}
-      scrollWheelZoom={true}
-      style={{ height: "700px", width: "100%" }}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openmaptiles.org/">OpenMapTiles</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url={`https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${process.env.NEXT_PUBLIC_MT_API_KEY}`}
+    <>
+      <Map
+        position={props.position}
+        zoom={props.zoom}
+        geojsondata={props.geojsondata}
       />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
+    </>
   );
 }
