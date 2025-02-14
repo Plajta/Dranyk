@@ -13,13 +13,11 @@ EXCLUSION_REGIONS = ["32003010002264835", "32003010002268968", "3200301000226827
                      # Last industry
                      "32003010002140177", "32003010002140804"]
 
-
-def process_rails(rail_features,
-                  building_features,
-                  gjson_writer,
-                  esp=0.00031):
+def __process_lines__(features,
+                      gjson_writer,
+                      esp=0.00031):
     multipoint_coords = []
-    for feature in rail_features:
+    for feature in features:
         coords = feature["geometry"]["coordinates"]
         for coord in coords:
             multipoint_coords.append(coord)
@@ -51,6 +49,21 @@ def process_rails(rail_features,
     for line in lines:
         gjson_writer.add_linestring(line)
     gjson_writer.write_data()
+
+
+def process_rails(rail_features,
+                  building_features,
+                  gjson_writer,
+                  esp=0.00031):
+    ### TODO: add building processing
+
+    __process_lines__(rail_features, gjson_writer, esp)
+
+
+def process_rivers(river_features,
+                   gjson_writer,
+                   esp=0.00031):
+    __process_lines__(river_features, gjson_writer, esp)
 
 
 def extract_coordinates_as_lines(data):

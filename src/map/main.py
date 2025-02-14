@@ -4,7 +4,7 @@ from pathlib import Path
 
 # relative imports
 from data_utils import GeoJSONreader, GeoJSONwriter
-from process import process_rails, extract_coordinates_as_lines
+from process import process_rails, process_rivers, extract_coordinates_as_lines
 
 ABS_PATH = str(Path(__file__).parents[2])
 DATA_PATH = join(ABS_PATH, "data")
@@ -17,8 +17,5 @@ if __name__ == "__main__":
     data = gjson_reader.read_data()
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
-    process_rails(rivers["features"],gjson_writer,0.00021)
-
-
-    #process_rails(rivers["features"], gjson_writer)
-    process_rails(data["WGS_koleje2"]["features"],gjson_writer,0.00031)
+    process_rivers(rivers["features"], gjson_writer, 0.00021)
+    process_rails(data["WGS_koleje2"]["features"], gjson_writer, 0.00031)
