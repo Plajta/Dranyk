@@ -26,3 +26,33 @@ class GeoJSONreader:
             self.data[file_name] = file_content
 
         return self.data
+
+
+class GeoJSONwriter:
+    def __init__(self, out_file):
+        # main header for GeoJSON
+        self.data = {
+            "type": "FeatureCollection",
+            "features": []
+        }
+        self.out_file = out_file
+
+    def add_polygon(self, np_array):
+        polygon = {
+            "type": "Feature",
+            "id": 1,
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[]]
+            },
+            "properties": {}
+        }
+
+        for point in np_array:
+            polygon["geometry"]["coordinates"][0].append(point.tolist())
+
+        self.data["features"].append(polygon)
+
+    def write_data(self):
+        with open(self.out_file, 'w') as outfile:
+            geojson.dump(self.data, outfile)

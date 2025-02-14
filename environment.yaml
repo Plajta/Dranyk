@@ -7,3 +7,5 @@ dependencies:
   - pip
   - pip:
     - geojson
+    - shapely
+    - scipy
