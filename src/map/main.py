@@ -17,9 +17,8 @@ if __name__ == "__main__":
     data = gjson_reader.read_data()
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
-    """
-    process_rails(rivers["features"],gjson_writer)
-    """
+
+    #process_rails(rivers["features"], gjson_writer)
     process_rails(data["WGS_koleje2"]["features"],
                   data["WGS_budova"]["features"],
                   gjson_writer)
