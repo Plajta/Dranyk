@@ -10,3 +10,5 @@ dependencies:
     - shapely
     - scipy
     - fastapi
+    - scipy
+    - scikit-learn

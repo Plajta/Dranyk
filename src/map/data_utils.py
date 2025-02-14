@@ -1,7 +1,6 @@
 import geojson
-
 import os
-
+from shapely.geometry import mapping
 
 class GeoJSONreader:
     def __init__(self, data_path):
@@ -73,6 +72,14 @@ class GeoJSONwriter:
             "properties": {}
         }
         self.data["features"].append(point)
+    
+    def add_linestring(self, line):
+        line_dict = {
+            "type": "Feature",
+            "geometry": mapping(line),
+            "properties": {}
+        }
+        self.data["features"].append(line_dict)
 
     def write_data(self):
         with open(self.out_file, 'w') as outfile:

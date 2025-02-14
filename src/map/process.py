@@ -1,23 +1,43 @@
 from shapely import convex_hull
-from shapely.geometry import Polygon, MultiPoint
+from shapely.geometry import Point, LineString
+
+from sklearn.cluster import DBSCAN
+from scipy.spatial import Delaunay
 
 import numpy as np
-
+import networkx as nx
 
 def process_rails(rail_features, gjson_writer):
-    for i, feature in enumerate(rail_features):
-        coords = feature["geometry"]["coordinates"][0]
-        #area = feature["properties"]["Shape.STArea()"]
-        #length = feature["properties"]["Shape.STLength()"]
+    multipoint_coords = []
+    for feature in rail_features:
+        coords = feature["geometry"]["coordinates"]
+        for coord in coords:
+            multipoint_coords.append(coord)
 
-        print(coords)
-        exit(0)
+    coords = np.array(multipoint_coords)
+    dbscan = DBSCAN(eps=0.00031, min_samples=1)
+    labels = dbscan.fit_predict(coords)
 
-        #hull = convex_hull(Polygon(coords))
-        #np_hull = np.array(hull.exterior.coords)
-        
-        # Insert magic here
-        #gjson_writer.add_polygon(np_hull)
+    unique_labels = set(labels)
+    clustered_points = [
+        coords[labels == label].mean(axis=0).tolist() for label in unique_labels if label != -1
+    ]
 
-        print("Processed " + str(i))
+    tri = Delaunay(clustered_points)
+    edges = set()
+
+    for simplex in tri.simplices:
+        for i in range(3):
+            p1, p2 = tuple(clustered_points[simplex[i]]), tuple(clustered_points[simplex[(i+1) % 3]])
+            edges.add((p1, p2))
+
+    G = nx.Graph()
+    for edge in edges:
+        G.add_edge(edge[0], edge[1], weight=np.linalg.norm(np.array(edge[0]) - np.array(edge[1])))
+
+    mst = nx.minimum_spanning_tree(G)
+    lines = [LineString([Point(p1), Point(p2)]) for p1, p2 in mst.edges]
+
+    for line in lines:
+        gjson_writer.add_linestring(line)
     gjson_writer.write_data()
