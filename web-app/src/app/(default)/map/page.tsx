@@ -1,24 +1,26 @@
-"use client";
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import fs from "fs/promises";
+import GeoJsonMap from "@/components/geojsonmap";
+import path from "path";
 
-export default function MapPage() {
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("@/components/geojsonmap"), {
-        loading: () => <p>A map is loading</p>,
-        ssr: false,
-      }),
-    [],
+export default async function MapPage() {
+  const dataDir = path.join(process.cwd(), "/../data");
+  const filenames = await fs.readdir(dataDir);
+  const geojsonDataArray = await Promise.all(
+    filenames.map(async (filename) => {
+      const filePath = path.join(dataDir, filename);
+      const fileContents = await fs.readFile(filePath, "utf-8");
+      return JSON.parse(fileContents);
+    }),
   );
-
-  const position: [number, number] = [51.505, -0.09];
+  const position: [number, number] = [49.7475, 13.3776];
   const zoom = 13;
-
   return (
     <div>
-      <Map position={position} zoom={zoom} />
-      <p>map</p>
+      <GeoJsonMap
+        position={position}
+        zoom={zoom}
+        geojsonDataArray={geojsonDataArray}
+      />
     </div>
   );
 }
