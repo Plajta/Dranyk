@@ -4,7 +4,7 @@ import UserName from "./username";
 export default function Header() {
   return (
     <div className={style.main}>
-      <h1>Header</h1>
+      <h1>Dranyk</h1>
       <div className={style.authspace}>
         <UserName />
         <AuthButton />

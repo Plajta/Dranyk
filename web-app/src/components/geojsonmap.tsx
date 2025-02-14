@@ -6,7 +6,7 @@ import { useMemo } from "react";
 type MapProps = {
   position: [number, number];
   zoom: number;
-  geojsondata: any;
+  geojsonDataArray: any;
 };
 
 export default function GeoJsonMap(props: MapProps) {
@@ -18,15 +18,12 @@ export default function GeoJsonMap(props: MapProps) {
       }),
     [],
   );
-  const position: [number, number] = [51.505, -0.09];
-  const zoom = 13;
-
   return (
     <>
       <Map
         position={props.position}
         zoom={props.zoom}
-        geojsondata={props.geojsondata}
+        geojsonDataArray={props.geojsonDataArray}
       />
     </>
   );
