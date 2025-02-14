@@ -36,14 +36,14 @@ sample_geojson = {
                 "type": "Polygon",
                 "coordinates": [
                     [
-                        [11.0, 50.4], 
+                        [11.0, 50.4],
                         [10.7, 50.5],
                         [10.5, 50.5],
                         [10.7, 50.7],
-                        [11.2, 50.5], 
+                        [11.2, 50.5],
                         [11.3, 50.2],
                         [11.1, 50]
-                        
+
                     ]
                 ]
             }
@@ -58,4 +58,4 @@ sample_geojson = {
 
 @app.get("/output")
 async def root():
-    return {"data": sample_geojson}
+    return sample_geojson
