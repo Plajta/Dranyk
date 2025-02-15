@@ -16,9 +16,11 @@ class GeoJSONreader:
         for file in os.listdir(self.data_path):
             if file == ".gitkeep": # ignore gitkeep
                 continue
+            if file == "data_web":
+                continue
 
             file_path_abs = os.path.join(self.data_path, file)
-
+            
             file_name = file.replace(".geojson", "")
             print(f"Processed {file_name}")
             file_content = self.__read_geojson__(file_path_abs)
@@ -91,3 +93,10 @@ class GeoJSONwriter:
             "type": "FeatureCollection",
             "features": []
         }
+
+    def merge(self,GeoJSONwriter):
+
+        self.data = {
+        "type": "FeatureCollection",
+        "features": self.data["features"] + GeoJSONwriter.data["features"]
+    }

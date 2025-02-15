@@ -3,7 +3,7 @@ import GeoJsonMap from "@/components/geojsonmap";
 import path from "path";
 
 export default async function MapPage() {
-  const dataDir = path.join(process.cwd(), "/../data");
+  const dataDir = path.join(process.cwd(), "/../data/data_web");
   const filenames = await fs.readdir(dataDir);
   const geojsonDataArray = await Promise.all(
     filenames.map(async (filename) => {
