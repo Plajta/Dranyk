@@ -41,3 +41,20 @@ def process_rails(rail_features, gjson_writer):
     for line in lines:
         gjson_writer.add_linestring(line)
     gjson_writer.write_data()
+
+def extract_coordinates_as_lines(data):
+
+    
+    line_strings = []
+    
+    for feature in data.get("features", []):
+        geom = feature.get("geometry", {})
+        if geom.get("type") == "Polygon":
+            for ring in geom.get("coordinates", []):
+                line_strings.append({"type": "LineString", "coordinates": ring})
+        elif geom.get("type") == "MultiPolygon":
+            for polygon in geom.get("coordinates", []):
+                for ring in polygon:
+                    line_strings.append({"type": "LineString", "coordinates": ring})
+    
+    return {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": ls} for ls in line_strings]}
