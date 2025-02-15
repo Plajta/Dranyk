@@ -1,4 +1,5 @@
-from shapely.geometry import Point, LineString
+from shapely.geometry import Point, LineString, Polygon
+import shapely
 
 from sklearn.cluster import DBSCAN
 from scipy.spatial import Delaunay
@@ -13,9 +14,34 @@ EXCLUSION_REGIONS = ["32003010002264835", "32003010002268968", "3200301000226827
                      # Last industry
                      "32003010002140177", "32003010002140804"]
 
+MAX_POINT_DIST = 0.004
 
-def __remove_buildings__(lines, buildings, exclusion_regions):
-    pass
+
+def __remove_from_buildings__(lines, buildings, exclusion_regions):
+    accepted_lines = []
+
+    for line in lines:
+        point1 = list(line.coords)[0]
+        point2 = list(line.coords)[1]
+        center_point_line = shapely.centroid(LineString([point1, point2]))
+
+        should_keep = True  # Assume line should be kept unless excluded
+
+        for building in buildings:
+            if building["properties"]["ID"] in exclusion_regions:
+                building_polygon = Polygon(building["geometry"]["coordinates"][0])
+                center_point_building = shapely.centroid(building_polygon)
+
+                dist = shapely.distance(center_point_building, center_point_line)
+                
+                if dist < MAX_POINT_DIST:
+                    should_keep = False
+                    break  # No need to check further
+
+        if should_keep:
+            accepted_lines.append(line)
+
+    return accepted_lines
 
 
 def __process_lines__(features,
@@ -53,13 +79,13 @@ def __process_lines__(features,
 
 
 def process_rails(rail_features,
+                  building_features,
                   gjson_writer,
                   esp=0.00031):
     lines = __process_lines__(rail_features, esp)
-    #filtered_lines = __remove_buildings__(lines, building_features, EXCLUSION_REGIONS) # TODO
-    for line in lines:
+    filtered_lines = __remove_from_buildings__(lines, building_features, EXCLUSION_REGIONS)
+    for line in filtered_lines:
         gjson_writer.add_linestring(line)
-    gjson_writer.write_data()
 
 
 def process_rivers(river_features,
@@ -68,7 +94,6 @@ def process_rivers(river_features,
     rivers = __process_lines__(river_features, esp)
     for river in rivers:
         gjson_writer.add_linestring(river)
-    gjson_writer.write_data()
 
 
 def extract_coordinates_as_lines(data):

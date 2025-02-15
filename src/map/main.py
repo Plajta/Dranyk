@@ -22,4 +22,7 @@ if __name__ == "__main__":
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
     process_rivers(rivers["features"], gjson_rivers, 0.00021)
-    process_rails(data["WGS_koleje2"]["features"], gjson_rails, 0.00031)
+    process_rails(data["WGS_koleje2"]["features"], data["WGS_budova"]["features"], gjson_rails, 0.00031)
+
+    gjson_rails.write_data()
+    gjson_rivers.write_data()
