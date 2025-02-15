@@ -70,14 +70,17 @@ def main(geojson_data, start, end):
     else:
         print("No path found between the points.")
 
-def track(input_geojson,GeoJSONwriter):
+def track(input_geojson,GeoJSONwriter,start=(13.3227427651515, 49.7070727727273),end=(14.4308351203704, 49.6997400462963)):
 
-    geojson = main(input_geojson,(13.3227427651515, 49.7070727727273),(14.4308351203704, 49.6997400462963))
+    geojson = main(input_geojson,start,end)
     GeoJSONwriter.data = geojson
+    
+    print(GeoJSONwriter.data["features"][0]["geometry"[coordinates]])
+    print(GeoJSONwriter.data["features"][-1]["geometry"[coordinates]])
 
-    coords = np.array([13.3227427651515, 49.7070727727273])
+    coords = np.array(start)
     GeoJSONwriter.add_point(coords)
-    coords = np.array([14.4308351203704, 49.6997400462963])
+    coords = np.array(end)
     GeoJSONwriter.add_point(coords)
     print("done")
 
