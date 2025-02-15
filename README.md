@@ -1,24 +1,24 @@
 # Dranyk
 
-Projekt vytvářený na Movement hackathonu v Plzni v TechToweru. Software a design systému dronu pro doručování krve napříč plzeňskými nemocnicemi.
+Projekt vytvářený na Mobility hackathonu Plzeň v TechToweru. Software a design systému dronů pro doručování krve napříč plzeňskými nemocnicemi.
 
-## Oblasti
+## Mapové sady
 
-- Trasovani
-- Bezpecnot / design postupu
-- Distribuční aplikace
+- **Budovy**
+- **Chodníky**
+- **Dálnice a silnice**
+- **Koleje včetně stanic**
+- **Kolejových tratě ČD**
+- **Mosty**
+- **Nástupiště**
+- **Zbytek pozemních komunikací**
+- **Vodní toky**
 
-## Data
-
-- Poloha ulic z RUIAN: [odkaz](https://opendata.plzen.eu/public/opendata/detail/10)
-- Plochy budov: [odkaz](https://opendata.plzen.eu/public/opendata/detail/85)
-
-- Heatmap obyvatel
-- Objekty v mapách [řeky, tratě, silnice???]
-- Body nemocnic
-- Bezletové zóny
+## Zpracované data
+- **Segmenty kolejových tratí** `rail_map.geojson`
+- **Segmenty řek** `river_map.geojson`
 
 ## TODO
 
-- [ ] Předělat Clustering vlakových cest
+- [x] Předělat Clustering vlakových cest
 - [x] Omezit přelety nad nádražími
