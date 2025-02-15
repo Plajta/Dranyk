@@ -21,4 +21,4 @@ Projekt vytvářený na Movement hackathonu v Plzni v TechToweru. Software a des
 ## TODO
 
 - [ ] Předělat Clustering vlakových cest
-- [ ] Omezit přelety nad nádražími
+- [x] Omezit přelety nad nádražími
