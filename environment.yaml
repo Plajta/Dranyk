@@ -12,3 +12,5 @@ dependencies:
     - fastapi
     - scipy
     - scikit-learn
+    - rasterio
+    - matplotlib
