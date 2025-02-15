@@ -54,7 +54,7 @@ class CustomAStar(AStar):
     def neighbors(self, n):
         for v in self.vectors:
             n1 = Point(n.x + v.x * self.cell_size, n.y + v.y * self.cell_size)
-            set_precision(n1,self.cell_size*0.5)
+            set_precision(n1,self.cell_size)
             yield n1
 
     def distance_between(self, n1, n2):
@@ -65,8 +65,56 @@ class CustomAStar(AStar):
         return dist
 
     def heuristic_cost_estimate(self, current, goal):
-        return current.distance(goal)
+        return current.distance(goal)*2
 
     def is_goal_reached(self, current, goal):
         return current.distance(goal) < 0.55 * self.cell_size
 
+
+def main(start, end, cell_size):
+    # imports
+    from os.path import join
+    from pathlib import Path
+    import matplotlib.pyplot as plt
+    from shapely.geometry import Point
+
+    # relative imports
+    from utils import read_geojson
+
+    ABS_PATH = str(Path(__file__).parents[2])
+    DATA_PATH = join(ABS_PATH, "data")
+    OUT_PATH = join(ABS_PATH, "out/outfile.geojson")
+
+    # coefficients
+    coefs = {"WGS_provozni_komunikace": 3, "WGS_vodni_tok": -1, "WGS_budova": 3, "WGS_chodnik": 4, "WGS_koleje": -1}
+    colors = {"WGS_provozni_komunikace": "0.8", "WGS_vodni_tok": "b", "WGS_budova": "0.5", "WGS_chodnik": "0.3",
+              "WGS_koleje": "g"}
+
+    data = {}
+    for key in coefs.keys():
+        data[key] = read_geojson("/".join([DATA_PATH, key + ".geojson"]))
+
+    start = Point([*start])
+    set_precision(start,cell_size)
+    end = Point([*end])
+    set_precision(end,cell_size)
+    cell_size = 0.0001
+
+    algorithm = CustomAStar(cell_size, data, coefs)
+    path = algorithm.astar(start, end)
+    line = LineString(path)
+    plt.imshow(algorithm.obstacles, cmap='gray')
+
+    xcoords, ycoords = [], []
+    for p in line.coords:
+        xcoords.append(int((p[0] - MIN[0]) / cell_size))
+        ycoords.append(algorithm.out_shape[0] - int((p[1] - MIN[1]) / cell_size))
+
+    plt.plot(xcoords, ycoords, color="r")
+    plt.show()
+
+    return line
+
+
+if __name__ == '__main__':
+    print(main((13.35, 49.74), (13.39, 49.78), 0.0001))

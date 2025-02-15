@@ -14,8 +14,8 @@ OUT_PATH = join(ABS_PATH, "out/outfile.geojson")
 
 
 if __name__ == "__main__":
-    coefs = {"WGS_dalnice_silnice": 3, "WGS_vodni_tok": -1, "WGS_budova": 3, "WGS_chodnik": 4, "WGS_koleje": -1}
-    colors = {"WGS_dalnice_silnice": "0.8", "WGS_vodni_tok": "b", "WGS_budova": "0.5", "WGS_chodnik": "0.3", "WGS_koleje": "g"}
+    coefs = {"WGS_provozni_komunikace": 3, "WGS_vodni_tok": -1, "WGS_budova": 3, "WGS_chodnik": 4, "WGS_koleje": -1}
+    colors = {"WGS_provozni_komunikace": "0.8", "WGS_vodni_tok": "b", "WGS_budova": "0.5", "WGS_chodnik": "0.3", "WGS_koleje": "g"}
 
     data = {}
     for key in coefs.keys():

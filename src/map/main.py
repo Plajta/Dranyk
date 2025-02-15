@@ -6,6 +6,7 @@ from track import track
 
 # relative imports
 from utils import read_geojson, merge
+from a_star_madness import main as astar_main
 
 ABS_PATH = str(Path(__file__).parents[2])
 
@@ -19,7 +20,13 @@ def main():
 
     koular = merge(river_data, rails_data)
 
-    perar,start_points,end_points = track(river_data,(13.3767908,49.7320639),(13.3840758,49.7609489))
+    start = (13.3767908,49.7320639)
+    end = (13.3840758,49.7609489)
+
+    perar,start_points,end_points = track(river_data, start, end)
+
+    start_path = astar_main(start, start_points[0], 0.0001)
+    end_path = astar_main(end_points[1], end, 0.0001)
 
     print(start_points)
     print(end_points)
@@ -27,5 +34,5 @@ def main():
     return rails_data
 
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     main()
