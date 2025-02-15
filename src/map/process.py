@@ -97,7 +97,12 @@ def process_rivers(river_features,
         gjson_writer.add_linestring(line)
     river_features = gjson_writer.data["features"]
     gjson_writer.clear_data_buffer()
-    filtered_lines = __process_lines__(river_features, 0.00027)
+    filtered_lines = __process_lines__(river_features, 0.00031)
+    for line in filtered_lines:
+        gjson_writer.add_linestring(line)
+    river_features = gjson_writer.data["features"]
+    gjson_writer.clear_data_buffer()
+    filtered_lines = __process_lines__(river_features, 0.0008)
     for line in filtered_lines:
         gjson_writer.add_linestring(line)
 

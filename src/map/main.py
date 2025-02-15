@@ -21,7 +21,7 @@ def main():
     data = gjson_reader.read_data()
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
-    process_rivers(rivers["features"], gjson_rivers, 0.00008)
+    process_rivers(rivers["features"], gjson_rivers, 0.0001)
     
     process_rails(data["WGS_koleje2"]["features"], data["WGS_budova"]["features"], gjson_rails, 0.00031)
 
