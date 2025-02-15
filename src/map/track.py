@@ -1,6 +1,5 @@
 import json
 import networkx as nx
-import geopandas as gpd
 from shapely.geometry import LineString, Point
 from scipy.spatial import KDTree
 import numpy as np

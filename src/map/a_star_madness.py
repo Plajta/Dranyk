@@ -1,6 +1,5 @@
 from shapely.geometry import LineString, Point, shape
 from shapely import set_precision
-from rtree import index
 from astar import AStar
 import numpy as np
 
