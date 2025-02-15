@@ -10,7 +10,7 @@ ABS_PATH = str(Path(__file__).parents[2])
 DATA_PATH = join(ABS_PATH, "data")
 OUT_PATH = join(ABS_PATH, "out/outfile.geojson")
 
-if __name__ == "__main__":
+def render():
     gjson_reader = GeoJSONreader(DATA_PATH)
     gjson_writer = GeoJSONwriter(OUT_PATH)
 
@@ -18,4 +18,8 @@ if __name__ == "__main__":
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
     process_rivers(rivers["features"], gjson_writer, 0.00021)
+    print(gjson_writer.data)
     process_rails(data["WGS_koleje2"]["features"], gjson_writer, 0.00031)
+
+if __name__ == "__main__":
+    render()

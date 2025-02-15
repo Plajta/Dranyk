@@ -48,7 +48,7 @@ def __process_lines__(features,
 
     for line in lines:
         gjson_writer.add_linestring(line)
-    gjson_writer.write_data()
+    
 
 
 def process_rails(rail_features,
@@ -62,8 +62,21 @@ def process_rails(rail_features,
 
 def process_rivers(river_features,
                    gjson_writer,
-                   esp=0.00031):
+                   esp=0.00021):
+    print(f"gjson writer: {type(gjson_writer)}")
     __process_lines__(river_features, gjson_writer, esp)
+    river_features = gjson_writer.data["features"]
+    gjson_writer.clear_data_buffer()
+    print(gjson_writer.data)
+    __process_lines__(river_features, gjson_writer, 0.0003)
+
+    river_features = gjson_writer.data["features"]
+    gjson_writer.clear_data_buffer()
+    print(gjson_writer.data)
+    __process_lines__(river_features, gjson_writer, 0.00055)
+
+    gjson_writer.write_data()
+
 
 
 def extract_coordinates_as_lines(data):

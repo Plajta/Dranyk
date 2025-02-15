@@ -85,3 +85,9 @@ class GeoJSONwriter:
     def write_data(self):
         with open(self.out_file, 'w') as outfile:
             geojson.dump(self.data, outfile)
+
+    def clear_data_buffer(self):
+        self.data = {
+            "type": "FeatureCollection",
+            "features": []
+        }
