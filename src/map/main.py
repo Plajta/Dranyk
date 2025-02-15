@@ -25,11 +25,11 @@ def main():
 
     perar,start_points,end_points = track(river_data, start, end)
 
-    start_path = astar_main(start, start_points[0], 0.0001)
-    end_path = astar_main(end_points[1], end, 0.0001)
-
     print(start_points)
     print(end_points)
+
+    start_path = astar_main(start, start_points[0], 0.0001)
+    end_path = astar_main(end_points[1], end, 0.0001)
 
     return rails_data
 

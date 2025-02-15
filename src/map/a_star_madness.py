@@ -98,7 +98,6 @@ def main(start, end, cell_size):
     set_precision(start,cell_size)
     end = Point([*end])
     set_precision(end,cell_size)
-    cell_size = 0.0001
 
     algorithm = CustomAStar(cell_size, data, coefs)
     path = algorithm.astar(start, end)
