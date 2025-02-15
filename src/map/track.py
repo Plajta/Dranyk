@@ -77,8 +77,8 @@ def track(input_geojson,start=(13.3227427651515, 49.7070727727273),end=(13.43083
     print(end)
     geojson = main(input_geojson,start,end)
     try:
-        print(geojson["features"][0]["geometry"]["coordinates"])
-        print(geojson["features"][-1]["geometry"]["coordinates"])
+        end_point = geojson["features"][0]["geometry"]["coordinates"]
+        start_point = geojson["features"][-1]["geometry"]["coordinates"]
     except:
         print("no path")
 
@@ -95,7 +95,7 @@ def track(input_geojson,start=(13.3227427651515, 49.7070727727273),end=(13.43083
     # coords = np.array(end)
     # GeoJSONwriter.add_point(coords)
     print("done")
-    return geojson
+    return geojson,start_point,end_point
 
     
 
