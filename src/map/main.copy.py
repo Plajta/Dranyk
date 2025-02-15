@@ -4,8 +4,7 @@ from pathlib import Path
 from track import track
 
 # relative imports
-from data_utils import read_geojson
-from data_gen.process import process_rails, process_rivers, extract_coordinates_as_lines
+from utils import read_geojson
 from pathfind import run_pathfind
 
 ABS_PATH = str(Path(__file__).parents[2])

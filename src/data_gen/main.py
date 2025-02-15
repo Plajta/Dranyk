@@ -3,7 +3,7 @@ from os.path import join
 from pathlib import Path
 
 # relative imports
-from data_utils import GeoJSONreader, GeoJSONwriter
+from utils import GeoJSONreader, GeoJSONwriter
 from process import process_rails, process_rivers, extract_coordinates_as_lines
 
 ABS_PATH = str(Path(__file__).parents[2])

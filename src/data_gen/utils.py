@@ -95,9 +95,9 @@ class GeoJSONwriter:
             "features": []
         }
 
-    def merge(self,GeoJSONwriter):
+    def merge(self, GeoJSONwriter):
 
         self.data = {
-        "type": "FeatureCollection",
-        "features": self.data["features"] + GeoJSONwriter.data["features"]
-    }
+            "type": "FeatureCollection",
+            "features": self.data["features"] + GeoJSONwriter.data["features"]
+        }
