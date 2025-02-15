@@ -64,7 +64,7 @@ class CustomAStar(AStar):
         return dist
 
     def heuristic_cost_estimate(self, current, goal):
-        return current.distance(goal)*2
+        return current.distance(goal)*4
 
     def is_goal_reached(self, current, goal):
         return current.distance(goal) < 0.55 * self.cell_size
