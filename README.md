@@ -20,5 +20,5 @@ Projekt vytvářený na Movement hackathonu v Plzni v TechToweru. Software a des
 
 ## TODO
 
-- Hustota obyv - Honza
-- Řekyyy
+- [ ] Předělat Clustering vlakových cest
+- [ ] Omezit přelety nad nádražími

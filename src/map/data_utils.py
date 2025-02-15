@@ -72,7 +72,7 @@ class GeoJSONwriter:
             "properties": {}
         }
         self.data["features"].append(point)
-    
+
     def add_linestring(self, line):
         line_dict = {
             "type": "Feature",
