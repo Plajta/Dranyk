@@ -21,6 +21,4 @@ if __name__ == "__main__":
 
 
     #process_rails(rivers["features"], gjson_writer)
-    process_rails(data["WGS_koleje2"]["features"],
-                  data["WGS_budova"]["features"],
-                  gjson_writer)
+    process_rails(data["WGS_koleje2"]["features"],gjson_writer,0.00031)
