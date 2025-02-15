@@ -21,14 +21,14 @@ def main():
     data = gjson_reader.read_data()
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
-    process_rivers(rivers["features"], gjson_writer, 0.00008)
+    process_rivers(rivers["features"], gjson_rivers, 0.00008)
     
     process_rails(data["WGS_koleje2"]["features"], data["WGS_budova"]["features"], gjson_rails, 0.00031)
 
     gjson_rails.write_data()
     gjson_rivers.write_data()
 
-    return gjson_writer.data
+    return gjson_rivers.data
 
 if __name__ == "__main__":
     main()

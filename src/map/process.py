@@ -76,10 +76,6 @@ def __process_lines__(features,
     mst = nx.minimum_spanning_tree(G)
     lines = [LineString([Point(p1), Point(p2)]) for p1, p2 in mst.edges]
 
-    for line in lines:
-        gjson_writer.add_linestring(line)
-    gjson_writer.write_data()
-
     return lines
 
 
@@ -96,7 +92,9 @@ def process_rails(rail_features,
 def process_rivers(river_features,
                    gjson_writer,
                    esp=0.00031):
-    __process_lines__(river_features, gjson_writer, esp)
+    filtered_lines = __process_lines__(river_features, esp)
+    for line in filtered_lines:
+        gjson_writer.add_linestring(line)
 
 
 def extract_coordinates_as_lines(data):
