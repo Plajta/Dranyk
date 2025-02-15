@@ -26,15 +26,18 @@ def main():
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
     process_rivers(rivers["features"], gjson_rivers, 0.0001)
     print("reky")
-    process_rails(data["WGS_koleje2"]["features"], data["WGS_budova"]["features"], gjson_rails, 0.00031)
+    #process_rails(data["WGS_koleje2"]["features"], data["WGS_budova"]["features"], gjson_rails, 0.00031)
     print("koleje")
+
+    track(gjson_rivers.data,gjson_track)
+
     gjson_rails.write_data()
     gjson_rivers.write_data()
     gjson_track.write_data()
 
-    gjson_rivers.merge(gjson_rails)
+    #gjson_rivers.merge(gjson_rails)
 
-    return gjson_rivers.data
+    return gjson_track.data
 
 if __name__ == "__main__":
     main()

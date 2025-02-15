@@ -3,6 +3,7 @@ import networkx as nx
 import geopandas as gpd
 from shapely.geometry import LineString, Point
 from scipy.spatial import KDTree
+import numpy as np
 
 def load_geojson(file_path):
     with open(file_path, 'r') as f:
@@ -41,7 +42,7 @@ def find_shortest_path(G, points, start_point, end_point):
     
     return path
 
-def extract_geojson_path(G, path, start, end):
+def extract_geojson_path(G, path):
     features = []
     
     for i in range(len(path) - 1):
@@ -56,29 +57,9 @@ def extract_geojson_path(G, path, start, end):
             "properties": {}
         })
     
-    # Add start and end points
-    features.append({
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": start
-        },
-        "properties": {"marker": "start"}
-    })
-    
-    features.append({
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": end
-        },
-        "properties": {"marker": "end"}
-    })
-    
     return {"type": "FeatureCollection", "features": features}
 
-def main(input_geojson, start, end):
-    geojson_data = load_geojson(input_geojson)
+def main(geojson_data, start, end):
     G, edges, points = build_graph(geojson_data)
     path = find_shortest_path(G, points, start, end)
     
@@ -89,11 +70,18 @@ def main(input_geojson, start, end):
     else:
         print("No path found between the points.")
 
-def track(input_geojson,start,end,GeoJSONwriter):
+def track(input_geojson,GeoJSONwriter):
 
-    geojson = main("out/rivers.geojson",(13.3227427651515, 49.7070727727273),(13.4308351203704, 49.6997400462963))
-    print("done")
+    geojson = main(input_geojson,(13.3227427651515, 49.7070727727273),(14.4308351203704, 49.6997400462963))
     GeoJSONwriter.data = geojson
+
+    coords = np.array([13.3227427651515, 49.7070727727273])
+    GeoJSONwriter.add_point(coords)
+    coords = np.array([14.4308351203704, 49.6997400462963])
+    GeoJSONwriter.add_point(coords)
+    print("done")
+
+    
 
 
 # Example usage:
