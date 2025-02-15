@@ -7,7 +7,7 @@ from scipy.spatial import Delaunay
 import numpy as np
 import networkx as nx
 
-def process_rails(rail_features, gjson_writer):
+def process_rails(rail_features, gjson_writer,esp=0.0031):
     multipoint_coords = []
     for feature in rail_features:
         coords = feature["geometry"]["coordinates"]
@@ -15,7 +15,7 @@ def process_rails(rail_features, gjson_writer):
             multipoint_coords.append(coord)
 
     coords = np.array(multipoint_coords)
-    dbscan = DBSCAN(eps=0.00031, min_samples=1)
+    dbscan = DBSCAN(eps=esp, min_samples=1)
     labels = dbscan.fit_predict(coords)
 
     unique_labels = set(labels)

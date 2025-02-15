@@ -19,5 +19,5 @@ if __name__ == "__main__":
     #process_rails(data["WGS_koleje2"]["features"], gjson_writer)
 
     rivers = extract_coordinates_as_lines(data["WGS_vodni_tok"])
-    process_rails(rivers["features"],gjson_writer)
+    process_rails(rivers["features"],gjson_writer,0.00021)
 
