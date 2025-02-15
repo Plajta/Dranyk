@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from main import main
 
 app = FastAPI()
 
@@ -58,4 +58,4 @@ sample_geojson = {
 
 @app.get("/output")
 async def root():
-    return sample_geojson
+    return main()

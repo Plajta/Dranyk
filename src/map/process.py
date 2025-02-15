@@ -95,6 +95,11 @@ def process_rivers(river_features,
     filtered_lines = __process_lines__(river_features, esp)
     for line in filtered_lines:
         gjson_writer.add_linestring(line)
+    river_features = gjson_writer.data["features"]
+    gjson_writer.clear_data_buffer()
+    filtered_lines = __process_lines__(river_features, 0.00027)
+    for line in filtered_lines:
+        gjson_writer.add_linestring(line)
 
 
 def extract_coordinates_as_lines(data):
