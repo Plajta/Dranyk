@@ -2,7 +2,7 @@ import networkx as nx
 from networkx.algorithms.shortest_paths.astar import astar_path
 
 
-def __add_paths_to_graphs__(data, graph, factor):
+def __add_paths_to_graphs__(data, graph, weight_factor):
     pass
 
 
