@@ -13,8 +13,12 @@ EXCLUSION_REGIONS = ["32003010002264835", "32003010002268968", "3200301000226827
                      # Last industry
                      "32003010002140177", "32003010002140804"]
 
+
+def __remove_buildings__(lines, buildings, exclusion_regions):
+    pass
+
+
 def __process_lines__(features,
-                      gjson_writer,
                       esp=0.00031):
     multipoint_coords = []
     for feature in features:
@@ -45,25 +49,26 @@ def __process_lines__(features,
 
     mst = nx.minimum_spanning_tree(G)
     lines = [LineString([Point(p1), Point(p2)]) for p1, p2 in mst.edges]
+    return lines
 
+
+def process_rails(rail_features,
+                  gjson_writer,
+                  esp=0.00031):
+    lines = __process_lines__(rail_features, esp)
+    #filtered_lines = __remove_buildings__(lines, building_features, EXCLUSION_REGIONS) # TODO
     for line in lines:
         gjson_writer.add_linestring(line)
     gjson_writer.write_data()
 
 
-def process_rails(rail_features,
-                  building_features,
-                  gjson_writer,
-                  esp=0.00031):
-    ### TODO: add building processing
-
-    __process_lines__(rail_features, gjson_writer, esp)
-
-
 def process_rivers(river_features,
                    gjson_writer,
                    esp=0.00031):
-    __process_lines__(river_features, gjson_writer, esp)
+    rivers = __process_lines__(river_features, esp)
+    for river in rivers:
+        gjson_writer.add_linestring(river)
+    gjson_writer.write_data()
 
 
 def extract_coordinates_as_lines(data):
