@@ -8,3 +8,7 @@ env
 
 #generated folders
 /src/map/__pycache__/*
+
+pocketbase
+pb_data
+pb_migrations
