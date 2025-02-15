@@ -33,7 +33,7 @@ def __remove_from_buildings__(lines, buildings, exclusion_regions):
                 center_point_building = shapely.centroid(building_polygon)
 
                 dist = shapely.distance(center_point_building, center_point_line)
-                
+
                 if dist < MAX_POINT_DIST:
                     should_keep = False
                     break  # No need to check further
