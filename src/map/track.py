@@ -4,6 +4,7 @@ import geopandas as gpd
 from shapely.geometry import LineString, Point
 from scipy.spatial import KDTree
 import numpy as np
+from utils import merge, add_point
 
 def load_geojson(file_path):
     with open(file_path, 'r') as f:
@@ -70,13 +71,24 @@ def main(geojson_data, start, end):
     else:
         print("No path found between the points.")
 
-def track(input_geojson,start=(13.3227427651515, 49.7070727727273),end=(14.4308351203704, 49.6997400462963)):
+def track(input_geojson,start=(13.3227427651515, 49.7070727727273),end=(13.4308351203704, 49.6997400462963)):
 
+    print(start)
+    print(end)
     geojson = main(input_geojson,start,end)
+    try:
+        print(geojson["features"][0]["geometry"]["coordinates"])
+        print(geojson["features"][-1]["geometry"]["coordinates"])
+    except:
+        print("no path")
+
+    print(add_point(np.array(start)))
+    
+    geojson["features"].append(add_point(np.array(start)))
+    geojson["features"].append(add_point(np.array(end)))
     
     
-    # print(GeoJSONwriter.data["features"][0]["geometry"[coordinates]])
-    # print(GeoJSONwriter.data["features"][-1]["geometry"[coordinates]])
+   
 
     # coords = np.array(start)
     # GeoJSONwriter.add_point(coords)
