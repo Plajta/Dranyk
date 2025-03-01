@@ -28,8 +28,8 @@ def main():
     print(start_points)
     print(end_points)
 
-    start_path = astar_main(start, end_points[1], 0.0005)
-    end_path = astar_main(start_points[0], end, 0.0005)
+    start_path = astar_main(start, end_points[0])
+    end_path = astar_main(start_points[0], end)
 
     return rails_data
 
