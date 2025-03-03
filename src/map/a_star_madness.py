@@ -1,10 +1,11 @@
 import math
 from collections.abc import Generator
-from typing import Any, NamedTuple
+from typing import NamedTuple
 
 import numpy as np
 import rasterio
 from astar import AStar
+from rasterio.transform import Affine
 from shapely.geometry import LineString
 
 MIN = (13.2, 49.65)
@@ -39,12 +40,12 @@ class CustomAStar(AStar):
                 yield n1
 
     def distance_between(self, n1: IntPoint, n2: IntPoint) -> float:
-        dist = math.sqrt((n1.x - n2.x) ** 2 + (n1.y - n2.y) ** 2) * self.dist_coef
+        dist = math.dist(n1, n2) * self.dist_coef
         dist += self.price_map[n2.y, n2.x]
         return dist
 
     def heuristic_cost_estimate(self, current: IntPoint, goal: IntPoint) -> float:
-        return math.sqrt((current.x - goal.x) ** 2 + (current.y - goal.y) ** 2) * self.dist_coef
+        return math.dist(current, goal) * self.dist_coef
 
     def is_goal_reached(self, current: IntPoint, goal: IntPoint) -> bool:
         return current == goal
@@ -59,8 +60,7 @@ def main(start: tuple[float, float], end: tuple[float, float]) -> LineString:
     TIFF_PATH = ABS_PATH / "out" / "raster.tiff"
 
     raster: np.ndarray
-    bbox: Any
-    reso: tuple
+    transmat: Affine
     with rasterio.open(TIFF_PATH, "r") as dataset:
         raster = dataset.read(1)
         transmat = dataset.transform
