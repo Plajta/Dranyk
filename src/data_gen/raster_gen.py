@@ -96,7 +96,7 @@ def main() -> None:
 
     ABS_PATH = Path(__file__).parents[2]
     DATA_PATH = ABS_PATH / "data"
-    CONF_PATH = ABS_PATH / "out" / "raster.json"
+    CONF_PATH = ABS_PATH / "processed_data" / "raster.json"
     OUT_PATH = ABS_PATH / "out" / "raster.tiff"
 
     if not Path.exists(CONF_PATH):

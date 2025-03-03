@@ -1,3 +1,4 @@
+import math
 from collections.abc import Generator
 from typing import Any, NamedTuple
 
@@ -37,13 +38,13 @@ class CustomAStar(AStar):
             if 0 <= n1.x < self.map_shape[1] and 0 <= n1.y < self.map_shape[0]:
                 yield n1
 
-    def distance_between(self, n1: Point, n2: Point) -> int:
-        dist = np.sqrt((n1.x - n2.x) ** 2 + (n1.y - n2.y) ** 2) * self.dist_coef
+    def distance_between(self, n1: Point, n2: Point) -> float:
+        dist = math.sqrt((n1.x - n2.x) ** 2 + (n1.y - n2.y) ** 2) * self.dist_coef
         dist += self.price_map[n2.y, n2.x]
         return dist
 
-    def heuristic_cost_estimate(self, current: Point, goal: Point) -> int:
-        return np.sqrt((current.x - goal.x) ** 2 + (current.y - goal.y) ** 2) * self.dist_coef
+    def heuristic_cost_estimate(self, current: Point, goal: Point) -> float:
+        return math.sqrt((current.x - goal.x) ** 2 + (current.y - goal.y) ** 2) * self.dist_coef
 
     def is_goal_reached(self, current: Point, goal: Point) -> bool:
         return current == goal
